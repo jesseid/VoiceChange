@@ -68,20 +68,26 @@ fun HomeScreen(viewModel: MainViewModel) {
             }
         }
     ){
-        Column(Modifier) {
-            Spacer(
-                modifier = Modifier.statusBarsHeight()
-            )
+        if (selectedItem == 0) {
+            Column(Modifier) {
+                Spacer(
+                    modifier = Modifier.statusBarsHeight()
+                )
 
 
-            AudioInfoList()
+                AudioInfoList()
 
 
-            ChangeTypeList()
+                ChangeTypeList()
 
-            BottomBar(viewModel)
+                BottomBar(viewModel)
 
-            Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(30.dp))
+            }
+        } else if(selectedItem == 1) {
+            AudioListScreen()
+        } else {
+            MineScreen()
         }
     }
     Spacer(modifier = Modifier.size(100.dp,100.dp))
@@ -221,7 +227,7 @@ fun BottomBar(viewModel: MainViewModel) {
         Row (
             modifier = Modifier
                 .height(height = 120.dp)
-                .padding(start=150.dp)
+                .padding(start = 150.dp)
             ,
             horizontalArrangement = Arrangement.Center,
                 ){
