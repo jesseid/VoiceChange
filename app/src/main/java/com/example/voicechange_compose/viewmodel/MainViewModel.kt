@@ -6,14 +6,22 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.voicechange_compose.module.ChangeType
+import com.example.voicechange_compose.module.changeTypeList
 import java.io.IOException
 
 class MainViewModel : ViewModel() {
-    private var currentPausePositionInSong = 0
+
+    private var _currentChangeType = MutableLiveData<ChangeType>()
+    val currentChangeType: LiveData<ChangeType> = _currentChangeType
+
     private val _isRecording = MutableLiveData<Boolean>()
     val isRecording: LiveData<Boolean> = _isRecording
     private var mediaPlayer: MediaPlayer = MediaPlayer()
 
+    fun refreshChangeType(changeType: ChangeType) {
+        _currentChangeType.postValue(changeType)
+    }
 
     fun startRecording(){
 //        if (mediaPlayer.isPlaying) {

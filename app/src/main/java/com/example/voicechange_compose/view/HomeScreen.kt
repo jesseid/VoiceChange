@@ -1,5 +1,7 @@
 package com.example.voicechange_compose.view
 
+import android.os.Handler
+import android.widget.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,10 +31,18 @@ import com.example.voicechange_compose.module.homeAudioInfoList
 import com.example.voicechange_compose.viewmodel.MainViewModel
 import com.google.accompanist.insets.statusBarsHeight
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.voicechange.audio.AudioEngine
+import com.voicechange.audio.NetworkClient
+import com.voicechange.audio.NetworkReceiver
 
 @ExperimentalFoundationApi
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
+
+    var mRecordStateHandler: Handler? = null
+    var mNetworkClient: NetworkClient? = null
+    var mNetworkReceiver: NetworkReceiver? = null
+    var mAudioEngine: AudioEngine? = null
     rememberSystemUiController().setStatusBarColor(Color.Transparent, darkIcons = true)
     var selectedItem by remember { mutableStateOf(0) }
     val items = listOf("录音", "记录", "设置")
@@ -74,11 +84,9 @@ fun HomeScreen(viewModel: MainViewModel) {
                     modifier = Modifier.statusBarsHeight()
                 )
 
+                AudioInfoList(viewModel)
 
-                AudioInfoList()
-
-
-                ChangeTypeList()
+                ChangeTypeList(viewModel)
 
                 BottomBar(viewModel)
 
@@ -94,7 +102,7 @@ fun HomeScreen(viewModel: MainViewModel) {
 }
 
 @Composable
-fun AudioInfoList() {
+fun AudioInfoList(viewModel: MainViewModel) {
     Text(
         text = "采样信息",
         color = Color.Gray,
@@ -103,14 +111,14 @@ fun AudioInfoList() {
     )
     LazyColumn {
         items(homeAudioInfoList) {
-            AudioInfoItem(it)
+            AudioInfoItem(it, viewModel)
         }
     }
 }
 
 @Composable
-fun AudioInfoItem(item: AudioInfo) {
-    LocalContext.current
+fun AudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
+    val changeType by viewModel.currentChangeType.observeAsState(changeTypeList[0])
     Box(
         modifier = Modifier
             .height(200.dp)
@@ -141,31 +149,58 @@ fun AudioInfoItem(item: AudioInfo) {
                 style = MaterialTheme.typography.subtitle1,
                 modifier = Modifier.padding(bottom = 10.dp)
             )
-            Text(
-                text = "PitchSemiTones: " + item.pitchSemiTones.toString(),
-                color = Color.White,
-                style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier.padding(bottom = 10.dp)
-            )
-            Text(
-                text = "TempoChange: " + item.tempoChange.toString(),
-                color = Color.White,
-                style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier.padding(bottom = 10.dp)
-            )
-            Text(
-                text = "SpeedChange: " + item.speedChange.toString(),
-                color = Color.White,
-                style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier.padding(bottom = 10.dp)
-            )
+            Row() {
+                Text(
+                    text = "PitchSemiTones: " ,
+                    color = Color.White,
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.padding(bottom = 10.dp)
+                )
+                var text by remember{ mutableStateOf("")}
+                TextField(
+                    value = if(text.isEmpty()) changeType.pitchSemiTones.toString() else text,
+                    onValueChange = {
+                        text = it
+                    }
+                )
+            }
+            Row() {
+                Text(
+                    text = "TempoChange: " ,
+                    color = Color.White,
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.padding(bottom = 10.dp)
+                )
+                var text by remember{ mutableStateOf("")}
+                TextField(
+                    value = if(text.isEmpty()) changeType.tempoChange.toString() else text,
+                    onValueChange = {
+                        text = it
+                    }
+                )
+            }
+            Row() {
+                Text(
+                    text = "SpeedChange: " ,
+                    color = Color.White,
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.padding(bottom = 10.dp)
+                )
+                var text by remember{ mutableStateOf("")}
+                TextField(
+                    value = if(text.isEmpty()) changeType.speedChange.toString() else text,
+                    onValueChange = {
+                        text = it
+                    }
+                )
+            }
         }
     }
 }
 
 @ExperimentalFoundationApi
 @Composable
-fun ChangeTypeList() {
+fun ChangeTypeList(viewModel: MainViewModel) {
     val tag0 = changeTypeList.slice(0..0)
     val tag1 = changeTypeList.slice(1..3)
     val tag2 = changeTypeList.slice(4..6)
@@ -173,14 +208,14 @@ fun ChangeTypeList() {
     val selectedTag = remember { mutableStateOf("") }
     Column() {
         tagList.forEach(){
-            ChangeRow(tag = it,selectedTag)
+            ChangeRow(tag = it,selectedTag,viewModel)
         }
 
     }
 }
 
 @Composable
-fun ChangeRow(tag:List<ChangeType>,selectedTag:MutableState<String>) {
+fun ChangeRow(tag:List<ChangeType>,selectedTag:MutableState<String>,viewModel: MainViewModel) {
     Row(
         modifier = Modifier.padding(top = 20.dp)
     ) {
@@ -192,6 +227,7 @@ fun ChangeRow(tag:List<ChangeType>,selectedTag:MutableState<String>) {
                     selected = it.name == selectedTag.value,
                     onClick = {
                         selectedTag.value = it.name
+                        viewModel.refreshChangeType(it)
                     }
                 )
 

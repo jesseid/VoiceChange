@@ -17,7 +17,6 @@ import com.google.accompanist.insets.ProvideWindowInsets
 class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
 
-
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
