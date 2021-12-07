@@ -21,6 +21,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.*
 import com.example.voicechange_compose.R
@@ -81,9 +83,8 @@ fun HomeScreen(viewModel: MainViewModel) {
         if (selectedItem == 0) {
             Column(Modifier) {
                 Spacer(
-                    modifier = Modifier.statusBarsHeight()
+                    modifier = Modifier.height(16.dp)
                 )
-
                 AudioInfoList(viewModel)
 
                 ChangeTypeList(viewModel)
@@ -107,7 +108,7 @@ fun AudioInfoList(viewModel: MainViewModel) {
         text = "采样信息",
         color = Color.Gray,
         style = MaterialTheme.typography.h5,
-        modifier = Modifier.padding(16.dp,16.dp,16.dp,8.dp)
+        modifier = Modifier.padding(16.dp,0.dp,16.dp,8.dp)
     )
     LazyColumn {
         items(homeAudioInfoList) {
@@ -121,11 +122,12 @@ fun AudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
     val changeType by viewModel.currentChangeType.observeAsState(changeTypeList[0])
     Box(
         modifier = Modifier
-            .height(200.dp)
+            .height(260.dp)
             .padding(8.dp)
             .clip(RoundedCornerShape(10.dp))
     ) {
         Column(
+            verticalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
                 .fillMaxSize()
                 .background(
@@ -154,14 +156,15 @@ fun AudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                     text = "PitchSemiTones: " ,
                     color = Color.White,
                     style = MaterialTheme.typography.subtitle1,
-                    modifier = Modifier.padding(bottom = 10.dp)
+                    modifier = Modifier.padding(top = 15.dp)
                 )
                 var text by remember{ mutableStateOf("")}
                 TextField(
                     value = if(text.isEmpty()) changeType.pitchSemiTones.toString() else text,
                     onValueChange = {
                         text = it
-                    }
+                    },
+                    textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
             Row() {
@@ -169,14 +172,15 @@ fun AudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                     text = "TempoChange: " ,
                     color = Color.White,
                     style = MaterialTheme.typography.subtitle1,
-                    modifier = Modifier.padding(bottom = 10.dp)
+                    modifier = Modifier.padding(top = 15.dp)
                 )
                 var text by remember{ mutableStateOf("")}
                 TextField(
                     value = if(text.isEmpty()) changeType.tempoChange.toString() else text,
                     onValueChange = {
                         text = it
-                    }
+                    },
+                    textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
             Row() {
@@ -184,14 +188,15 @@ fun AudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                     text = "SpeedChange: " ,
                     color = Color.White,
                     style = MaterialTheme.typography.subtitle1,
-                    modifier = Modifier.padding(bottom = 10.dp)
+                    modifier = Modifier.padding(top = 15.dp)
                 )
                 var text by remember{ mutableStateOf("")}
                 TextField(
                     value = if(text.isEmpty()) changeType.speedChange.toString() else text,
                     onValueChange = {
                         text = it
-                    }
+                    },
+                    textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
         }
@@ -221,7 +226,7 @@ fun ChangeRow(tag:List<ChangeType>,selectedTag:MutableState<String>,viewModel: M
     ) {
         tag.forEach {
             Row(
-                modifier = Modifier.padding(start = 10.dp)
+                modifier = Modifier.padding(start = 30.dp)
             ) {
                 RadioButton(
                     selected = it.name == selectedTag.value,
@@ -236,8 +241,6 @@ fun ChangeRow(tag:List<ChangeType>,selectedTag:MutableState<String>,viewModel: M
                     modifier = Modifier.size(80.dp,50.dp)
                 )
             }
-
-            Spacer(modifier = Modifier.width(20.dp))
         }
     }
 }
@@ -262,33 +265,50 @@ fun BottomBar(viewModel: MainViewModel) {
     if (isPlaying) {
         Row (
             modifier = Modifier
-                .height(height = 120.dp)
-                .padding(start = 150.dp)
+                .padding(start = 0.dp)
             ,
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.SpaceBetween,
                 ){
+            Spacer(modifier = Modifier.width(166.dp))
             LottieAnimation(
                 lottieComposition,
                 lottieAnimationState,
                 modifier = Modifier
-                    .size(100.dp)
-                    .padding(0.dp, 40.dp, 0.dp, 0.dp)
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
+                    .size(60.dp)
+                    .padding(0.dp, 0.dp, 0.dp, 0.dp),
                 alignment = Alignment.Center
             )
+            Spacer(modifier = Modifier.width(164.dp))
         }
 
+    } else{
+        Spacer(modifier = Modifier.size(60.dp))
     }
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Button(onClick = { /*TODO*/ },
-            modifier = Modifier.padding(0.dp,10.dp,0.dp,0.dp)) {
-            Text(text = "试听",)
+        val checkedState = remember { mutableStateOf(true) }
+        Column(
+            modifier = Modifier
+                .width(60.dp)
+                .padding(top = 15.dp)
+        ) {
+            Switch(
+                checked = checkedState.value,
+                onCheckedChange = {
+                    checkedState.value = it
+                    viewModel.switchRecordingWithPlay(it)
+                },
+            )
+            Text(text = "边录边播",
+                style = MaterialTheme.typography.overline,
+                maxLines = 1,
+                modifier = Modifier.padding(top = 10.dp)
+            )
         }
+
         Icon(if (isPlaying) {
             Icons.Filled.Close
         } else {
@@ -301,9 +321,19 @@ fun BottomBar(viewModel: MainViewModel) {
                 .size(60.dp)
 
         )
-        Button(onClick = {  },
-            modifier = Modifier.padding(0.dp,10.dp,0.dp,0.dp)) {
-            Text(text = "保存")
+        Column(
+            modifier = Modifier.width(60.dp)
+        ) {
+            IconButton(onClick = { /*TODO*/ },
+                modifier = Modifier.padding(0.dp,0.dp,0.dp,0.dp),
+            ) {
+                Icon(Icons.Filled.Done,null)
+            }
+            Text(text = "保存",
+                style = MaterialTheme.typography.overline,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(start = 10.dp,bottom = 5.dp)
+            )
         }
     }
 }

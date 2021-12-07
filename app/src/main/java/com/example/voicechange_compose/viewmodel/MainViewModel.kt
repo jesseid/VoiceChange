@@ -15,9 +15,16 @@ class MainViewModel : ViewModel() {
     private var _currentChangeType = MutableLiveData<ChangeType>()
     val currentChangeType: LiveData<ChangeType> = _currentChangeType
 
+    private var _recordingWithPlay = MutableLiveData<Boolean>()
+    val recordingWithPlay: LiveData<Boolean> = _recordingWithPlay
+
     private val _isRecording = MutableLiveData<Boolean>()
     val isRecording: LiveData<Boolean> = _isRecording
     private var mediaPlayer: MediaPlayer = MediaPlayer()
+
+    fun switchRecordingWithPlay(value: Boolean) {
+        _recordingWithPlay.postValue((value))
+    }
 
     fun refreshChangeType(changeType: ChangeType) {
         _currentChangeType.postValue(changeType)
