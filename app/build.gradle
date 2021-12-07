@@ -45,6 +45,13 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.10.2"
+        }
+    }
+    ndkVersion '21.1.6352462'
 }
 
 dependencies {
@@ -99,4 +106,5 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-rxjava2:1.1.0-alpha02'
 
     implementation "com.airbnb.android:lottie-compose:4.0.0"
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
 }

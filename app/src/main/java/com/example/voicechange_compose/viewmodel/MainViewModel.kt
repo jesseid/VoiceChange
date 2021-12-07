@@ -22,6 +22,11 @@ class MainViewModel : ViewModel() {
     val isRecording: LiveData<Boolean> = _isRecording
     private var mediaPlayer: MediaPlayer = MediaPlayer()
 
+    @JvmName("getRecordingWithPlay1")
+    fun getRecordingWithPlay(): LiveData<Boolean> {
+        return recordingWithPlay
+    }
+
     fun switchRecordingWithPlay(value: Boolean) {
         _recordingWithPlay.postValue((value))
     }
