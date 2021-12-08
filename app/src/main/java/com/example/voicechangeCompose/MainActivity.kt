@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity(), IHandleAudioCallback {
         rxPermission.request(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
             Manifest.permission.RECORD_AUDIO)
             .subscribe { granted ->
                 if (granted) {

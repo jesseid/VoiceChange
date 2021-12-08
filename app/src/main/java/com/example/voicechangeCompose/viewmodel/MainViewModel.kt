@@ -17,6 +17,7 @@ import com.voicechange.audio.NetworkReceiver
 import com.voicechange.audio.common.IHandleAudioCallback
 import com.voicechange.audio.common.RecordState
 import com.voicechange.audio.common.TransFormParam
+import java.io.File
 
 class MainViewModel : ViewModel(), IHandleAudioCallback {
 
@@ -131,13 +132,18 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
         }
 
     fun saveToFile() {
-        val ret = mAudioEngine!!.saveToPCMFile(Utils.localExternalPath + "/soundtouch.pcm")
+        val filePath = Utils.localExternalPath + "/voiceChange"
+        val file = File(filePath)
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        val ret = mAudioEngine!!.saveToPCMFile(Utils.localExternalPath + "/voiceChange/soundtouch.pcm")
         if (ret) {
             setSaveState("保存成功" + Utils.localExternalPath + "/soundtouch.pcm")
         } else {
             setSaveState("保存失败" + Utils.localExternalPath + "/soundtouch.pcm")
         }
-        mAudioEngine!!.saveToWAVFile(Utils.localExternalPath + "/soundtouch.wav")
+        mAudioEngine!!.saveToWAVFile(Utils.localExternalPath + "/voiceChange/soundtouch.wav")
     }
 
    init {

@@ -6,7 +6,7 @@ import android.os.Handler
 import android.util.Log
 import com.voicechange.audio.common.AudioParam
 import com.voicechange.audio.common.IPlayComplete
-import com.example.voicechange_compose.audio.common.PlayState
+import com.example.voicechangeCompose.audio.common.PlayState
 
 class SampleAudioPlayer : IPlayComplete {
     private var mHandler: Handler?

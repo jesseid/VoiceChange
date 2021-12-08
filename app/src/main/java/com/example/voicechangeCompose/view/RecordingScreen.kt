@@ -24,12 +24,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.*
-import com.example.voicechange_compose.R
-import com.example.voicechange_compose.module.AudioInfo
-import com.example.voicechange_compose.module.ChangeType
-import com.example.voicechange_compose.module.changeTypeList
-import com.example.voicechange_compose.module.homeAudioInfoList
-import com.example.voicechange_compose.viewmodel.MainViewModel
+import com.example.voicechangeCompose.R
+import com.example.voicechangeCompose.module.AudioInfo
+import com.example.voicechangeCompose.module.ChangeType
+import com.example.voicechangeCompose.module.changeTypeList
+import com.example.voicechangeCompose.module.homeAudioInfoList
+import com.example.voicechangeCompose.viewmodel.MainViewModel
 
 
 @ExperimentalFoundationApi
@@ -238,7 +238,7 @@ fun BottomBar(viewModel: MainViewModel) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        val checkedState = remember { mutableStateOf(true) }
+        val checkedState = remember { mutableStateOf(false) }
         Column(
             modifier = Modifier
                 .width(60.dp)

@@ -1,6 +1,6 @@
 package com.voicechange.audio
 
-import com.example.voicechange_compose.audio.SoundTouchTransFormTool
+import com.example.voicechangeCompose.audio.SoundTouchTransFormTool
 import com.voicechange.audio.common.IHandleAudioCallback
 import com.voicechange.audio.common.TransFormParam
 import com.voicechange.audio.common.TransFormTool
@@ -79,7 +79,7 @@ class HandleAudioClient {
                         do {
                             buffer = mTransFormTool.receiveSamples()
                             val bytes: ByteArray? = buffer?.let {
-                                com.example.voicechange_compose.module.Utils.shortToByteSmall(
+                                com.example.voicechangeCompose.module.Utils.shortToByteSmall(
                                     it
                                 )
                             }

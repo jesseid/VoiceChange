@@ -4,7 +4,7 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Handler
 import android.util.Log
-import com.example.voicechange_compose.module.RegistrantList
+import com.example.voicechangeCompose.module.RegistrantList
 import com.voicechange.audio.common.AudioConstans
 import com.voicechange.audio.common.RecordState
 import java.util.concurrent.BlockingQueue
