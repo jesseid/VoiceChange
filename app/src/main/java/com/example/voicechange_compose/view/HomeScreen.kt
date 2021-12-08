@@ -62,7 +62,7 @@ fun HomeScreen(viewModel: MainViewModel) {
         if (selectedItem == 0) {
             RecordingScreen(viewModel)
         } else if(selectedItem == 1) {
-            AudioListScreen()
+            AudioListScreen(viewModel)
         } else {
             MineScreen()
         }

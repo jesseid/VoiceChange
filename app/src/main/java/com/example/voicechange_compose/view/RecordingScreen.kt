@@ -81,7 +81,7 @@ fun AudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                 .fillMaxSize()
                 .background(
                     brush = Brush.linearGradient(
-                        colors = listOf(Color.Green, Color.Gray),
+                        colors = listOf(Color.Green, Color.Green),
                         start = Offset(0f, Float.POSITIVE_INFINITY),
                         end = Offset(Float.POSITIVE_INFINITY, 0f)
                     )

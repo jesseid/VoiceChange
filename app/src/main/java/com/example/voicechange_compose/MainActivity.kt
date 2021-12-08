@@ -94,6 +94,20 @@ class MainActivity : ComponentActivity(), IHandleAudioCallback {
         mNetworkClient!!.connectNetworkService(mNetworkReceiver)
     }
 
+    private fun unInitAudioEngine() {
+        mAudioEngine!!.stopReplayAudioCache()
+        mAudioEngine!!.unregisterForRecordStateChanged(mRecordStateHandler)
+        mAudioEngine!!.unRegisterForHandleCallback()
+        mNetworkClient!!.disConnectNetworkService()
+        mNetworkReceiver!!.unInit()
+    }
+
+    override fun onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy()
+        unInitAudioEngine()
+    }
+
     private fun handleRecordState(ar: AsyncResult) {
         when (ar.result as Int) {
             RecordState.MSG_RECORDING_START -> mTvRecord!!.text = "录音中...请插入耳机"
@@ -108,11 +122,19 @@ class MainActivity : ComponentActivity(), IHandleAudioCallback {
     private val valueObserve = Observer<Boolean> { newValue ->
         value = newValue
     }
+    var isPlayCache = false
+    private val playObserve = Observer<Boolean> { newValue ->
+        isPlayCache = newValue
+    }
 
     override fun onHandleProcess(data: ByteArray?) {
         viewModel.recordingWithPlay.observe(this, valueObserve)
+        viewModel.playCacheRecord.observe(this, playObserve)
         if (value) {
             mNetworkClient!!.sendAudio(data)
+        }
+        if (isPlayCache) {
+            mAudioEngine!!.replayAudioCache()
         }
     }
 
@@ -120,7 +142,7 @@ class MainActivity : ComponentActivity(), IHandleAudioCallback {
 
     companion object {
         private val TAG = MainActivity::class.java.name
-        private const val MSG_RECORD_STATE = 0x01
+        const val MSG_RECORD_STATE = 0x01
     }
 
 }
