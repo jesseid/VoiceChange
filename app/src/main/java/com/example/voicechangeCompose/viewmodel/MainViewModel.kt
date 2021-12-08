@@ -7,10 +7,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.voicechange_compose.MainActivity
-import com.example.voicechange_compose.module.AsyncResult
-import com.example.voicechange_compose.module.ChangeType
-import com.example.voicechange_compose.module.Utils
+import com.example.voicechangeCompose.MainActivity
+import com.example.voicechangeCompose.module.AsyncResult
+import com.example.voicechangeCompose.module.ChangeType
+import com.example.voicechangeCompose.module.Utils
 import com.voicechange.audio.AudioEngine
 import com.voicechange.audio.NetworkClient
 import com.voicechange.audio.NetworkReceiver

@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.core.view.WindowCompat
-import com.example.voicechange_compose.ui.theme.VoiceChange_composeTheme
-import com.example.voicechange_compose.view.HomeScreen
-import com.example.voicechange_compose.viewmodel.MainViewModel
+import com.example.voicechangeCompose.ui.theme.VoiceChange_composeTheme
+import com.example.voicechangeCompose.view.HomeScreen
+import com.example.voicechangeCompose.viewmodel.MainViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.voicechange.audio.AudioEngine
