@@ -41,7 +41,7 @@ fun HomeScreen(viewModel: MainViewModel) {
 
                 title = {
                     if (saveState.isNotEmpty() || text.isNotEmpty()){
-                        Text(text + " " + saveState.substring(0..3))
+                        Text(text + " " + if (saveState.length > 4) saveState.substring(0..3) else saveState)
                     } else Text("主页")
                 },
             )
