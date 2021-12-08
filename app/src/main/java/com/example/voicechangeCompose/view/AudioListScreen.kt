@@ -1,4 +1,4 @@
-package com.example.voicechange_compose.view
+package com.example.voicechangeCompose.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

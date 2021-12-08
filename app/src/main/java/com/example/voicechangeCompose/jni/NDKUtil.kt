@@ -1,4 +1,4 @@
-package com.example.voicechange_compose.jni
+package com.example.voicechangeCompose.jni
 
 class NDKUtil {
     external fun stringFromJNI(): String?

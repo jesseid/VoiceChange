@@ -1,4 +1,4 @@
-package com.example.voicechange_compose.module
+package com.example.voicechangeCompose.module
 
 data class AudioInfo(
     val sampleRate: Float,

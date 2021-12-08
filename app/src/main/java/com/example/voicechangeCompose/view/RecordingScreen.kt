@@ -1,4 +1,4 @@
-package com.example.voicechange_compose.view
+package com.example.voicechangeCompose.view
 
 import android.os.Handler
 import androidx.compose.foundation.ExperimentalFoundationApi

@@ -1,4 +1,4 @@
-package com.example.voicechange_compose.audio.common
+package com.example.voicechangeCompose.audio.common
 
 interface PlayState {
     companion object {

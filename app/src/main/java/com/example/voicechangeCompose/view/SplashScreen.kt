@@ -1,4 +1,4 @@
-package com.example.voicechange_compose.view
+package com.example.voicechangeCompose.view
 
 import android.window.SplashScreen
 import androidx.compose.runtime.Composable

@@ -1,4 +1,4 @@
-package com.example.voicechange_compose.audio
+package com.example.voicechangeCompose.audio
 
 import com.amoment.audio.JNISoundTouch
 import com.voicechange.audio.common.TransFormTool
