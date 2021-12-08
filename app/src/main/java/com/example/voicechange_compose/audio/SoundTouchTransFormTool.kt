@@ -1,6 +1,6 @@
 package com.example.voicechange_compose.audio
 
-import com.example.amoment.JNISoundTouch
+import com.amoment.audio.JNISoundTouch
 import com.voicechange.audio.common.TransFormTool
 
 class SoundTouchTransFormTool : TransFormTool() {

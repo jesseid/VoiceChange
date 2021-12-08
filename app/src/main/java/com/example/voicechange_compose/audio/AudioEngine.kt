@@ -3,9 +3,9 @@ package com.voicechange.audio
 import android.os.Handler
 import android.os.Message
 import android.util.Log
-import com.example.voicechange_compose.MainActivity
 import com.example.voicechange_compose.module.AsyncResult
 import com.example.voicechange_compose.module.RegistrantList
+import com.example.voicechange_compose.viewmodel.MainViewModel
 import com.voicechange.audio.common.*
 import java.io.FileOutputStream
 import java.util.*
@@ -49,7 +49,7 @@ class AudioEngine : Handler(), IHandleAudioCallback {
         mHandleAudioRegistrants = null
     }
 
-    fun registerForHandleCallback(callback: MainActivity) {
+    fun registerForHandleCallback(callback: MainViewModel) {
         mHandleAudioRegistrants = callback
     }
 

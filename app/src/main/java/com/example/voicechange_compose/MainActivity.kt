@@ -4,9 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,8 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.Observer
-import com.example.voicechange_compose.module.AsyncResult
 import com.example.voicechange_compose.ui.theme.VoiceChange_composeTheme
 import com.example.voicechange_compose.view.HomeScreen
 import com.example.voicechange_compose.viewmodel.MainViewModel
@@ -27,7 +23,6 @@ import com.voicechange.audio.AudioEngine
 import com.voicechange.audio.NetworkClient
 import com.voicechange.audio.NetworkReceiver
 import com.voicechange.audio.common.IHandleAudioCallback
-import com.voicechange.audio.common.RecordState
 
 class MainActivity : ComponentActivity(), IHandleAudioCallback {
     private val viewModel by viewModels<MainViewModel>()
@@ -35,7 +30,6 @@ class MainActivity : ComponentActivity(), IHandleAudioCallback {
     var mNetworkClient: NetworkClient? = null
     var mNetworkReceiver: NetworkReceiver? = null
     var mAudioEngine: AudioEngine? = null
-    private var mTvRecord: TextView? = null
 
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +42,6 @@ class MainActivity : ComponentActivity(), IHandleAudioCallback {
     }
 
     private fun initLogic() {
-        initAudioEngine()
         requestPermission()
     }
 
@@ -69,31 +62,6 @@ class MainActivity : ComponentActivity(), IHandleAudioCallback {
             }
     }
 
-    private fun initAudioEngine() {
-        mRecordStateHandler = @SuppressLint("HandlerLeak")
-        object : Handler() {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
-                Log.i(TAG, "msg.what = " + msg.what)
-                when (msg.what) {
-                    MSG_RECORD_STATE -> {
-                        val ar = msg.obj as AsyncResult
-                        handleRecordState(ar)
-                    }
-                    else -> {
-                    }
-                }
-            }
-        }
-        mAudioEngine = AudioEngine()
-        mAudioEngine!!.registerForRecordStateChanged(mRecordStateHandler, MSG_RECORD_STATE)
-        mAudioEngine!!.registerForHandleCallback(this)
-        mNetworkClient = NetworkClient()
-        mNetworkReceiver = NetworkReceiver()
-        mNetworkReceiver!!.init()
-        mNetworkClient!!.connectNetworkService(mNetworkReceiver)
-    }
-
     private fun unInitAudioEngine() {
         mAudioEngine!!.stopReplayAudioCache()
         mAudioEngine!!.unregisterForRecordStateChanged(mRecordStateHandler)
@@ -108,34 +76,9 @@ class MainActivity : ComponentActivity(), IHandleAudioCallback {
         unInitAudioEngine()
     }
 
-    private fun handleRecordState(ar: AsyncResult) {
-        when (ar.result as Int) {
-            RecordState.MSG_RECORDING_START -> mTvRecord!!.text = "录音中...请插入耳机"
-            RecordState.MSG_RECORDING_STOP -> mTvRecord!!.text = ""
-            RecordState.MSG_RECORDING_STATE_ERROR -> mTvRecord!!.text = "录音异常"
-        }
-    }
-
     override fun onHandleStart() {}
 
-    var value = false
-    private val valueObserve = Observer<Boolean> { newValue ->
-        value = newValue
-    }
-    var isPlayCache = false
-    private val playObserve = Observer<Boolean> { newValue ->
-        isPlayCache = newValue
-    }
-
     override fun onHandleProcess(data: ByteArray?) {
-        viewModel.recordingWithPlay.observe(this, valueObserve)
-        viewModel.playCacheRecord.observe(this, playObserve)
-        if (value) {
-            mNetworkClient!!.sendAudio(data)
-        }
-        if (isPlayCache) {
-            mAudioEngine!!.replayAudioCache()
-        }
     }
 
     override fun onHandleComplete() {}
@@ -157,7 +100,7 @@ enum class AppState {
 fun ComposeVoiceChangeUI(viewModel: MainViewModel) {
     VoiceChange_composeTheme {
         ProvideWindowInsets {
-            val (appState, setAppState) = remember { mutableStateOf(AppState.Splash) }
+            val (appState, _) = remember { mutableStateOf(AppState.Splash) }
 
             when (appState) {
                 AppState.Splash -> {

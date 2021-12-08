@@ -27,7 +27,7 @@ fun AudioListScreen(viewModel: MainViewModel) {
                     .fillMaxWidth()
                     .height(50.dp)
                     .align(Alignment.CenterHorizontally)
-                    .clickable { viewModel.setPlayCacheRecord(true) }
+                    .clickable { viewModel.playCacheAudio() }
                     .wrapContentWidth(),
                 style = MaterialTheme.typography.h5,
             )

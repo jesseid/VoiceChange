@@ -11,11 +11,13 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.voicechange_compose.viewmodel.MainViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 @ExperimentalFoundationApi
 @Composable
@@ -24,6 +26,9 @@ fun HomeScreen(viewModel: MainViewModel) {
     rememberSystemUiController().setStatusBarColor(Color.Transparent, darkIcons = true)
     var selectedItem by remember { mutableStateOf(0) }
     val items = listOf("录音", "记录", "设置")
+    val saveState by viewModel.saveState.observeAsState("")
+    val text by viewModel.toastContent.observeAsState("")
+
     Scaffold(
         modifier = Modifier.padding(0.dp,35.dp,0.dp,16.dp),
         topBar = {
@@ -33,8 +38,11 @@ fun HomeScreen(viewModel: MainViewModel) {
                 navigationIcon = { IconButton(onClick = { /*TODO*/ }) {
                     Icon(Icons.Filled.MoreVert,null)
                 }},
+
                 title = {
-                    Text("主页")
+                    if (saveState.isNotEmpty() || text.isNotEmpty()){
+                        Text(text + " " + saveState.substring(0..3))
+                    } else Text("主页")
                 },
             )
         },

@@ -273,7 +273,7 @@ fun BottomBar(viewModel: MainViewModel) {
         Column(
             modifier = Modifier.width(60.dp)
         ) {
-            IconButton(onClick = { /*TODO*/ },
+            IconButton(onClick = { viewModel.saveToFile() },
                 modifier = Modifier.padding(0.dp,0.dp,0.dp,0.dp),
             ) {
                 Icon(Icons.Filled.Done,null)
