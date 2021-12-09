@@ -72,7 +72,7 @@ fun HomeScreen(viewModel: MainViewModel) {
         } else if(selectedItem == 1) {
             AudioListScreen(viewModel)
         } else {
-            MineScreen()
+            MineScreen(viewModel)
         }
     }
     Spacer(modifier = Modifier.size(100.dp,100.dp))

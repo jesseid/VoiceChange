@@ -36,10 +36,17 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
     private val _isRecording = MutableLiveData<Boolean>()
     val isRecording: LiveData<Boolean> = _isRecording
 
+    private val _showClearDialog = MutableLiveData<Boolean>()
+    val showClearDialog: LiveData<Boolean> = _showClearDialog
+
     var mRecordStateHandler: Handler? = null
     var mNetworkClient: NetworkClient? = null
     var mNetworkReceiver: NetworkReceiver? = null
     var mAudioEngine: AudioEngine? = null
+
+    fun setShowClearDialog(value: Boolean) {
+        _showClearDialog.postValue(value)
+    }
 
     private fun setSaveState(value: String) {
         _saveState.postValue(value)

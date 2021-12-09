@@ -264,7 +264,7 @@ fun BottomBar(viewModel: MainViewModel) {
             Icons.Filled.PlayArrow
         },
             contentDescription = "播放或者暂停",
-            tint = Color.Blue,
+            tint = Color.Red,
             modifier = Modifier
                 .clickable { viewModel.startRecording() }
                 .size(60.dp)
