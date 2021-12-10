@@ -146,7 +146,7 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
         }
         mAudioEngine = AudioEngine()
         mAudioEngine!!.registerForRecordStateChanged(mRecordStateHandler,
-            MainActivity.MSG_RECORD_STATE
+            MSG_RECORD_STATE
         )
         mAudioEngine!!.registerForHandleCallback(this)
         mNetworkClient = NetworkClient()
