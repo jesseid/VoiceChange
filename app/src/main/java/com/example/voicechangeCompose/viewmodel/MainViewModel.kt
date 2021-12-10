@@ -1,23 +1,32 @@
 package com.example.voicechangeCompose.viewmodel
 
 import android.annotation.SuppressLint
+import android.media.AudioFormat
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.voicechangeCompose.MainActivity
+import com.example.voicechangeCompose.audio.common.PlayState
 import com.example.voicechangeCompose.module.AsyncResult
 import com.example.voicechangeCompose.module.ChangeType
 import com.example.voicechangeCompose.module.Utils
+import com.example.voicechangeCompose.ui.activity.PlayActivity
 import com.voicechange.audio.AudioEngine
 import com.voicechange.audio.NetworkClient
 import com.voicechange.audio.NetworkReceiver
+import com.voicechange.audio.SampleAudioPlayer
+import com.voicechange.audio.common.AudioParam
 import com.voicechange.audio.common.IHandleAudioCallback
 import com.voicechange.audio.common.RecordState
 import com.voicechange.audio.common.TransFormParam
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.IOException
 
 class MainViewModel : ViewModel(), IHandleAudioCallback {
 
@@ -31,7 +40,7 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
     val currentChangeType: LiveData<ChangeType> = _currentChangeType
 
     private var _recordingWithPlay = MutableLiveData<Boolean>()
-    val recordingWithPlay: LiveData<Boolean> = _recordingWithPlay
+    private val recordingWithPlay: LiveData<Boolean> = _recordingWithPlay
 
     private val _isRecording = MutableLiveData<Boolean>()
     val isRecording: LiveData<Boolean> = _isRecording
@@ -42,10 +51,39 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
     private val _playState = MutableLiveData<String>()
     val playState: LiveData<String> = _playState
 
-    var mRecordStateHandler: Handler? = null
+    private val _sampleRate = MutableLiveData<String>()
+    val sampleRate: LiveData<String> = _sampleRate
+
+    private val _channel = MutableLiveData<String>()
+    val channel: LiveData<String> = _channel
+
+    private val _audioState = MutableLiveData<String>()
+    val audioState: LiveData<String> = _audioState
+
+    private var mRecordStateHandler: Handler? = null
     var mNetworkClient: NetworkClient? = null
     var mNetworkReceiver: NetworkReceiver? = null
     var mAudioEngine: AudioEngine? = null
+
+    private fun setAudioState(value: String) {
+        _audioState.postValue(value)
+    }
+
+    private fun getSampleRate(): String? {
+        return sampleRate.value
+    }
+
+    fun setSampleRate(value: String) {
+        _sampleRate.postValue(value)
+    }
+
+    private fun getChannel(): String? {
+        return channel.value
+    }
+
+    fun setChannel(value: String) {
+        _channel.postValue(value)
+    }
 
     fun setPlayState(value: String) {
         _playState.postValue(value)
@@ -160,8 +198,121 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
         mAudioEngine!!.saveToWAVFile(Utils.localExternalPath + "/voiceChange/soundtouch.wav")
     }
 
-   init {
+    private var mAudioPlayer // 播放器
+            : SampleAudioPlayer? = null
+
+    private val mHandler = object : Handler(Looper.myLooper()!!) {
+        @SuppressLint("HandlerLeak")
+        override fun handleMessage(msg: Message) {
+            // TODO Auto-generated method stub
+            when (msg.what) {
+                SampleAudioPlayer.STATE_MSG_ID -> showState(msg.obj as Int)
+            }
+        }
+    }
+
+    private fun initPlayLogic() {
+        mAudioPlayer = SampleAudioPlayer(mHandler)
+    }
+
+    fun showState(state: Int) {
+        var showString = ""
+        when (state) {
+            PlayState.MPS_UNINIT -> showString = "MPS_UNINIT"
+            PlayState.MPS_PREPARE -> showString = "MPS_PREPARE"
+            PlayState.MPS_PLAYING -> showString = "MPS_PLAYING"
+            PlayState.MPS_PAUSE -> showString = "MPS_PAUSE"
+        }
+        showState(showString)
+    }
+
+    private fun showState(str: String?) {
+        if (str != null) {
+            setPlayState(str)
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun play() {
+        if (mAudioPlayer!!.playState == PlayState.MPS_PAUSE) {
+            mAudioPlayer!!.play()
+            return
+        }
+
+        // 获取音频数据
+        val data = pCMData
+        if (data == null) {
+            setAudioState("$filePath：该路径下不存在文件！")
+            return
+        }
+
+        // 获取音频参数
+        val audioParam = audioParam
+        mAudioPlayer!!.setAudioParam(audioParam)
+        mAudioPlayer!!.setDataSource(data)
+
+        // 音频源就绪
+        mAudioPlayer!!.prepare()
+        mAudioPlayer!!.play()
+    }
+
+    fun pause() {
+        mAudioPlayer!!.pause()
+    }
+
+    fun stop() {
+        mAudioPlayer!!.stop()
+    }
+
+    private val audioParam: AudioParam
+        get() {
+            val frequency = getSampleRate()
+            val mFrequency = Integer.valueOf(frequency!!)
+            val channel = getChannel()
+            val mChannel = Integer.valueOf(channel!!)
+            val audioParam = AudioParam()
+            audioParam.mFrequency = mFrequency
+            audioParam.mChannelConfig = if (mChannel == 1) AudioFormat.CHANNEL_OUT_MONO else AudioFormat.CHANNEL_OUT_STEREO
+            audioParam.mSampBitConfig = AudioFormat.ENCODING_PCM_16BIT
+            return audioParam
+        }
+
+    private val filePath = Utils.localExternalPath + "/voiceChange/soundtouch.pcm"
+
+    private val pCMData: ByteArray?
+        get() {
+            val file = File(filePath)
+            if (!file.exists()) {
+                Log.d(PlayActivity.TAG, "pcm  can't find path:$filePath")
+                return null
+            }
+            Log.d(PlayActivity.TAG, "pcm  find path:$filePath")
+            val inStream: FileInputStream = try {
+                FileInputStream(file)
+            } catch (e: FileNotFoundException) {
+                Log.e(PlayActivity.TAG, "FileNotFoundException:" + e.message)
+                // TODO Auto-generated catch block
+                e.printStackTrace()
+                return null
+            }
+            var data_pack: ByteArray? = null
+            val size = file.length()
+            data_pack = ByteArray(size.toInt())
+            try {
+                inStream.read(data_pack)
+            } catch (e: IOException) {
+                Log.e(PlayActivity.TAG, "IOException:" + e.message)
+                // TODO Auto-generated catch block
+                e.printStackTrace()
+                return null
+            }
+            return data_pack
+        }
+
+
+    init {
         initAudioEngine()
+        initPlayLogic()
     }
 
     override fun onHandleStart() {
