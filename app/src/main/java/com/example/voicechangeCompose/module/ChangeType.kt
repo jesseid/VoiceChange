@@ -7,7 +7,7 @@ data class ChangeType(
     val speedChange: Float,
 )
 
-val changeTypeList = listOf<ChangeType>(
+val changeTypeList = listOf(
     ChangeType(
         "自定义",
     0F,
