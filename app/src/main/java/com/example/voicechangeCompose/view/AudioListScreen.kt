@@ -1,5 +1,7 @@
 package com.example.voicechangeCompose.view
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,11 +16,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
+import com.example.voicechangeCompose.ui.activity.PlayActivity
 import com.example.voicechangeCompose.viewmodel.MainViewModel
 
 @Composable
 fun AudioListScreen(viewModel: MainViewModel) {
+    val context = LocalContext.current
     Spacer(modifier = Modifier.height(30.dp))
     Surface(
         modifier = Modifier.padding(top = 30.dp),
@@ -34,7 +40,9 @@ fun AudioListScreen(viewModel: MainViewModel) {
                     .clip(RoundedCornerShape(10.dp))
                     .height(60.dp)
                     .align(Alignment.CenterHorizontally)
-                    .clickable { viewModel.playCacheAudio() }
+                    .clickable {
+                        PlayActivity.navigate(context)
+                        viewModel.playCacheAudio() }
                     .background(
                         brush = Brush.linearGradient(
                             colors = listOf(Color(0xFFF6F6F6), Color(0xFFF6F6F6)),

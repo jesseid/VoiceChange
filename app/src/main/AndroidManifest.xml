@@ -29,6 +29,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activity.PlayActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoiceChange_compose.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
