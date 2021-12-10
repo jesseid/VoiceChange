@@ -130,7 +130,7 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
 
     private fun initAudioEngine() {
         mRecordStateHandler = @SuppressLint("HandlerLeak")
-        object : Handler() {
+        object : Handler(Looper.myLooper()!!) {
             override fun handleMessage(msg: Message) {
                 super.handleMessage(msg)
                 Log.i(TAG, "msg.what = " + msg.what)
