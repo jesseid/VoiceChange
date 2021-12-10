@@ -1,7 +1,5 @@
 package com.example.voicechangeCompose.view
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,7 +16,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import com.example.voicechangeCompose.ui.activity.PlayActivity
 import com.example.voicechangeCompose.viewmodel.MainViewModel
 
