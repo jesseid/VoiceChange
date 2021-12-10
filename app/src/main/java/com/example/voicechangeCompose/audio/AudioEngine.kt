@@ -18,9 +18,9 @@ class AudioEngine : Handler(), IHandleAudioCallback {
     private var mStartFlag = false
     private var mRecordAudioClient: RecordAudioClient? = null
     private var mHandleAudioClient: HandleAudioClient? = null
-    private val mRcordQueue: BlockingQueue<ShortArray> = LinkedBlockingQueue()
-    private val mAudioResultDatas = LinkedList<ByteArray>()
-    private lateinit var mAudioByteDatas: ByteArray
+    private val mRecordQueue: BlockingQueue<ShortArray> = LinkedBlockingQueue()
+    private val mAudioResultData = LinkedList<ByteArray>()
+    private lateinit var mAudioByteData: ByteArray
     private var mAudioDataSize = 0
     private val mRecordStateChangeRegistrants: RegistrantList = RegistrantList()
 
@@ -58,12 +58,12 @@ class AudioEngine : Handler(), IHandleAudioCallback {
         if (mStartFlag) {
             return
         }
-        mRcordQueue.clear()
-        mAudioResultDatas.clear()
+        mRecordQueue.clear()
+        mAudioResultData.clear()
         mAudioDataSize = 0
-        mRecordAudioClient!!.startRecord(mRcordQueue)
+        mRecordAudioClient!!.startRecord(mRecordQueue)
         if (transFormParam != null) {
-            mHandleAudioClient!!.startHandleAudio(mRcordQueue, mAudioResultDatas, transFormParam)
+            mHandleAudioClient!!.startHandleAudio(mRecordQueue, mAudioResultData, transFormParam)
         }
         mStartFlag = true
     }
@@ -78,7 +78,7 @@ class AudioEngine : Handler(), IHandleAudioCallback {
     }
 
     fun replayAudioCache(): Boolean {
-        if (mAudioResultDatas.size == 0) {
+        if (mAudioResultData.size == 0) {
             return false
         }
         val audioParam = AudioParam()
@@ -87,7 +87,7 @@ class AudioEngine : Handler(), IHandleAudioCallback {
         audioParam.mSampBitConfig = ENCODING
         mAudioPlay.setAudioParam(audioParam)
         mAudioPlay.prepare()
-        mAudioPlay.setDataSource(mAudioByteDatas)
+        mAudioPlay.setDataSource(mAudioByteData)
         return mAudioPlay.play()
     }
 
@@ -106,7 +106,7 @@ class AudioEngine : Handler(), IHandleAudioCallback {
             // 保存文件
             val out = FileOutputStream(filePath)
             out.write(headers)
-            out.write(mAudioByteDatas)
+            out.write(mAudioByteData)
             out.close()
         } catch (e: Exception) {
             // TODO Auto-generated catch block
@@ -124,7 +124,7 @@ class AudioEngine : Handler(), IHandleAudioCallback {
         try {
             // 保存文件
             val out = FileOutputStream(filePath)
-            out.write(mAudioByteDatas)
+            out.write(mAudioByteData)
             out.close()
         } catch (e: Exception) {
             // TODO Auto-generated catch block
@@ -167,13 +167,13 @@ class AudioEngine : Handler(), IHandleAudioCallback {
 
     override fun onHandleComplete() {
         Log.d(TAG, "onHandleComplete")
-        mAudioByteDatas = ByteArray(mAudioDataSize)
+        mAudioByteData = ByteArray(mAudioDataSize)
         var offset = 0
-        for (bytes in mAudioResultDatas) {
-            System.arraycopy(bytes, 0, mAudioByteDatas, offset, bytes.size)
+        for (bytes in mAudioResultData) {
+            System.arraycopy(bytes, 0, mAudioByteData, offset, bytes.size)
             offset += bytes.size
         }
-        Log.d(TAG, "mAudioByteDatas.size = $mAudioDataSize")
+        Log.d(TAG, "mAudioByteData.size = $mAudioDataSize")
         if (mHandleAudioRegistrants != null) {
             mHandleAudioRegistrants!!.onHandleComplete()
         }
