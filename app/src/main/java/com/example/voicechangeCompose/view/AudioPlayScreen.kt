@@ -20,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.voicechangeCompose.R
-import com.example.voicechangeCompose.module.AudioInfo
 import com.example.voicechangeCompose.module.changeTypeList
 import com.example.voicechangeCompose.module.homeAudioInfoList
 import com.example.voicechangeCompose.viewmodel.MainViewModel
@@ -85,20 +84,19 @@ fun AudioPlayScreen(viewModel: MainViewModel) {
         Column {
             LazyColumn {
                 items(homeAudioInfoList) {
-                    PlayAudioInfoItem(it, viewModel)
+                    PlayAudioInfoItem(viewModel)
                 }
             }
             if (audioState.isNotEmpty()) {
                 Text(text = audioState)
             }
         }
-
     }
 }
 
 
 @Composable
-fun PlayAudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
+fun PlayAudioInfoItem(viewModel: MainViewModel) {
 
     val changeType by viewModel.currentChangeType.observeAsState(changeTypeList[0])
     Box(
@@ -120,7 +118,7 @@ fun PlayAudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                 )
                 .padding(8.dp)
         ) {
-            Row() {
+            Row {
                 Text(
                     text = "SampleRate: " ,
                     color = Color.White,
@@ -137,7 +135,7 @@ fun PlayAudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                     textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
-            Row() {
+            Row {
                 Text(
                     text = "Channel: " ,
                     color = Color.White,
@@ -154,7 +152,7 @@ fun PlayAudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                     textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
-            Row() {
+            Row {
                 Text(
                     text = "PitchSemiTones: " ,
                     color = Color.White,
@@ -170,7 +168,7 @@ fun PlayAudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                     textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
-            Row() {
+            Row {
                 Text(
                     text = "TempoChange: " ,
                     color = Color.White,
@@ -186,7 +184,7 @@ fun PlayAudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                     textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
-            Row() {
+            Row {
                 Text(
                     text = "SpeedChange: " ,
                     color = Color.White,
