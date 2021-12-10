@@ -1,5 +1,6 @@
 package com.voicechange.audio
 
+import android.annotation.SuppressLint
 import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Handler
@@ -64,6 +65,7 @@ class RecordAudioClient {
             mExitFlag = true
         }
 
+        @SuppressLint("MissingPermission")
         override fun run() {
             val audioRecord = AudioRecord(
                     MediaRecorder.AudioSource.MIC, FREQUENCY,
