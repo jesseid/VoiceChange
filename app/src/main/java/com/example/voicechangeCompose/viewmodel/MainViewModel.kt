@@ -22,7 +22,7 @@ import com.voicechange.audio.SampleAudioPlayer
 import com.voicechange.audio.common.AudioParam
 import com.voicechange.audio.common.IHandleAudioCallback
 import com.voicechange.audio.common.RecordState
-import com.voicechange.audio.common.TransFormParam
+import com.example.voicechangeCompose.audio.common.TransFormParam
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException

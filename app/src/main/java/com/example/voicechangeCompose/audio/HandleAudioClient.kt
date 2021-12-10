@@ -2,7 +2,7 @@ package com.voicechange.audio
 
 import com.example.voicechangeCompose.audio.SoundTouchTransFormTool
 import com.voicechange.audio.common.IHandleAudioCallback
-import com.voicechange.audio.common.TransFormParam
+import com.example.voicechangeCompose.audio.common.TransFormParam
 import com.voicechange.audio.common.TransFormTool
 import java.util.*
 import java.util.concurrent.BlockingQueue

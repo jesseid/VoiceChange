@@ -1,4 +1,6 @@
-package com.voicechange.audio.common
+package com.example.voicechangeCompose.audio.common
+
+import com.voicechange.audio.common.AudioConstans
 
 class TransFormParam {
     @JvmField
