@@ -1,6 +1,5 @@
 package com.example.voicechangeCompose.view
 
-import android.os.Handler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -100,7 +99,7 @@ fun AudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                 style = MaterialTheme.typography.subtitle1,
                 modifier = Modifier.padding(bottom = 10.dp)
             )
-            Row() {
+            Row {
                 Text(
                     text = "PitchSemiTones: " ,
                     color = Color.White,
@@ -116,7 +115,7 @@ fun AudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                     textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
-            Row() {
+            Row {
                 Text(
                     text = "TempoChange: " ,
                     color = Color.White,
@@ -132,7 +131,7 @@ fun AudioInfoItem(item: AudioInfo, viewModel: MainViewModel) {
                     textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
-            Row() {
+            Row {
                 Text(
                     text = "SpeedChange: " ,
                     color = Color.White,
@@ -160,8 +159,8 @@ fun ChangeTypeList(viewModel: MainViewModel) {
     val tag2 = changeTypeList.slice(4..6)
     val tagList = listOf(tag0,tag1,tag2)
     val selectedTag = remember { mutableStateOf("") }
-    Column() {
-        tagList.forEach(){
+    Column {
+        tagList.forEach {
             ChangeRow(tag = it,selectedTag,viewModel)
         }
 
