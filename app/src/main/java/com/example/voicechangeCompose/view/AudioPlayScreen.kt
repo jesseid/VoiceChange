@@ -1,5 +1,6 @@
 package com.example.voicechangeCompose.view
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.voicechangeCompose.R
@@ -27,6 +29,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun AudioPlayScreen(viewModel: MainViewModel) {
 
+    val activity = LocalContext.current as Activity
     var selectedItem by remember { mutableStateOf(0) }
     val playState by viewModel.playState.observeAsState("")
     val audioState by viewModel.audioState.observeAsState("")
@@ -39,8 +42,8 @@ fun AudioPlayScreen(viewModel: MainViewModel) {
             TopAppBar(
 //                modifier = Modifier.padding(16.dp),
                 backgroundColor = Color.White,
-                navigationIcon = { IconButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Filled.MoreVert,null)
+                navigationIcon = { IconButton(onClick = { activity.finish() }) {
+                    Icon(Icons.Filled.ArrowBack,null)
                 }
                 },
 

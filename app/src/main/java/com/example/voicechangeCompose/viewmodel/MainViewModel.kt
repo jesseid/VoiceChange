@@ -70,7 +70,9 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
     }
 
     private fun getSampleRate(): String? {
-        return sampleRate.value
+        return if (sampleRate.value != null){
+            sampleRate.value
+        } else "16000"
     }
 
     fun setSampleRate(value: String) {
@@ -78,7 +80,7 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
     }
 
     private fun getChannel(): String? {
-        return channel.value
+        return if(channel.value != null) channel.value else "1"
     }
 
     fun setChannel(value: String) {
@@ -295,18 +297,18 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
                 e.printStackTrace()
                 return null
             }
-            var data_pack: ByteArray? = null
+            val dataPack: ByteArray
             val size = file.length()
-            data_pack = ByteArray(size.toInt())
+            dataPack = ByteArray(size.toInt())
             try {
-                inStream.read(data_pack)
+                inStream.read(dataPack)
             } catch (e: IOException) {
                 Log.e(PlayActivity.TAG, "IOException:" + e.message)
                 // TODO Auto-generated catch block
                 e.printStackTrace()
                 return null
             }
-            return data_pack
+            return dataPack
         }
 
 
