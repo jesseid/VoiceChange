@@ -1,10 +1,8 @@
 package com.example.voicechangeCompose.audio.common
 
-import com.voicechange.audio.common.AudioConstans
-
 class TransFormParam {
     @JvmField
-    var mSampleRate = AudioConstans.FREQUENCY
+    var mSampleRate = AudioConstants.FREQUENCY
     @JvmField
     var mChannel = 1
     @JvmField

@@ -5,7 +5,7 @@ import android.media.MediaRecorder
 import android.os.Handler
 import android.util.Log
 import com.example.voicechangeCompose.module.RegistrantList
-import com.voicechange.audio.common.AudioConstans
+import com.example.voicechangeCompose.audio.common.AudioConstants
 import com.voicechange.audio.common.RecordState
 import java.util.concurrent.BlockingQueue
 
@@ -116,9 +116,9 @@ class RecordAudioClient {
 
     companion object {
         private val TAG = RecordAudioClient::class.java.name
-        private const val FREQUENCY = AudioConstans.FREQUENCY
-        private const val CHANNEL = AudioConstans.RECORD_CHANNEL
-        private const val ENCODING = AudioConstans.ENCODING
+        private const val FREQUENCY = AudioConstants.FREQUENCY
+        private const val CHANNEL = AudioConstants.RECORD_CHANNEL
+        private const val ENCODING = AudioConstants.ENCODING
         private val bufferSize = AudioRecord.getMinBufferSize(FREQUENCY, CHANNEL, ENCODING)
     }
 }

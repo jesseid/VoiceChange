@@ -1,6 +1,6 @@
 package com.voicechange.audio
 
-import com.voicechange.audio.common.AudioConstans
+import com.example.voicechangeCompose.audio.common.AudioConstants
 import com.voicechange.audio.common.AudioParam
 
 class NetworkReceiver {
@@ -25,8 +25,8 @@ class NetworkReceiver {
     }
 
     companion object {
-        private const val FREQUENCY = AudioConstans.FREQUENCY
-        private const val CHANNEL = AudioConstans.PLAY_CHANNEL
-        private const val ENCODING = AudioConstans.ENCODING
+        private const val FREQUENCY = AudioConstants.FREQUENCY
+        private const val CHANNEL = AudioConstants.PLAY_CHANNEL
+        private const val ENCODING = AudioConstants.ENCODING
     }
 }

@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
+import com.example.voicechangeCompose.audio.common.AudioConstants
 import com.example.voicechangeCompose.audio.common.TransFormParam
 import com.example.voicechangeCompose.module.AsyncResult
 import com.example.voicechangeCompose.module.RegistrantList
@@ -186,9 +187,9 @@ class AudioEngine : Handler(Looper.myLooper()!!), IHandleAudioCallback {
     companion object {
         private val TAG = AudioEngine::class.java.name
         private const val MSG_RECORD_STATE = 0x01
-        private const val FREQUENCY = AudioConstans.FREQUENCY
-        private const val CHANNEL = AudioConstans.PLAY_CHANNEL
-        private const val ENCODING = AudioConstans.ENCODING
+        private const val FREQUENCY = AudioConstants.FREQUENCY
+        private const val CHANNEL = AudioConstants.PLAY_CHANNEL
+        private const val ENCODING = AudioConstants.ENCODING
     }
 
     init {

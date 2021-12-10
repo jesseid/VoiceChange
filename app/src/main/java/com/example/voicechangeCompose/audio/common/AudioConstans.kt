@@ -1,8 +1,8 @@
-package com.voicechange.audio.common
+package com.example.voicechangeCompose.audio.common
 
 import android.media.AudioFormat
 
-interface AudioConstans {
+interface AudioConstants {
     companion object {
         const val FREQUENCY = 16000
         const val RECORD_CHANNEL = AudioFormat.CHANNEL_IN_MONO
