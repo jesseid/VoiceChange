@@ -19,7 +19,7 @@ import com.example.voicechangeCompose.view.HomeScreen
 import com.example.voicechangeCompose.viewmodel.MainViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.tbruyelle.rxpermissions2.RxPermissions
-import com.voicechange.audio.AudioEngine
+import com.example.voicechangeCompose.audio.AudioEngine
 import com.voicechange.audio.NetworkClient
 import com.voicechange.audio.NetworkReceiver
 import com.voicechange.audio.common.IHandleAudioCallback

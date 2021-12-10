@@ -1,19 +1,22 @@
-package com.voicechange.audio
+package com.example.voicechangeCompose.audio
 
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.util.Log
 import com.example.voicechangeCompose.module.AsyncResult
 import com.example.voicechangeCompose.module.RegistrantList
 import com.example.voicechangeCompose.viewmodel.MainViewModel
+import com.voicechange.audio.HandleAudioClient
+import com.voicechange.audio.RecordAudioClient
+import com.voicechange.audio.SampleAudioPlayer
 import com.voicechange.audio.common.*
-import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingQueue
 
-class AudioEngine : Handler(), IHandleAudioCallback {
+class AudioEngine : Handler(Looper.myLooper()!!), IHandleAudioCallback {
     @Volatile
     private var mStartFlag = false
     private var mRecordAudioClient: RecordAudioClient? = null
