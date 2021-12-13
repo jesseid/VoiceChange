@@ -10,10 +10,6 @@ class Registrant(h: Handler?, what: Int, obj: Any?) {
         userObj = null
     }
 
-    fun notifyRegistrant() {
-        internalNotifyRegistrant(null, null)
-    }
-
     fun notifyResult(result: Any?) {
         internalNotifyRegistrant(result, null)
     }
