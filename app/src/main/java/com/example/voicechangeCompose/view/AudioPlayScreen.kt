@@ -127,7 +127,7 @@ fun PlayAudioInfoItem(viewModel: MainViewModel) {
                 )
                 var text by remember{ mutableStateOf("") }
                 TextField(
-                    value = if(text.isEmpty()) "16000" else text,
+                    value = if(text.isEmpty()) "44100" else text,
                     onValueChange = {
                         text = it
                         viewModel.setSampleRate(it)

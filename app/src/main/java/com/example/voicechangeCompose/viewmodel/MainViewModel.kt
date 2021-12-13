@@ -72,7 +72,7 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
     private fun getSampleRate(): String? {
         return if (sampleRate.value != null){
             sampleRate.value
-        } else "16000"
+        } else "44100"
     }
 
     fun setSampleRate(value: String) {

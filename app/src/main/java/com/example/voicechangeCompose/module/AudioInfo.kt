@@ -10,7 +10,7 @@ data class AudioInfo(
 
 val homeAudioInfoList = listOf(
     AudioInfo(
-        16000F,
+        44100F,
         1F,
         0.0F,
         0.0F,
