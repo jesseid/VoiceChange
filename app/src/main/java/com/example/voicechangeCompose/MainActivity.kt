@@ -22,7 +22,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import com.example.voicechangeCompose.audio.AudioEngine
 import com.voicechange.audio.NetworkClient
 import com.voicechange.audio.NetworkReceiver
-import com.voicechange.audio.common.IHandleAudioCallback
+import com.example.voicechangeCompose.audio.common.IHandleAudioCallback
 
 class MainActivity : ComponentActivity(), IHandleAudioCallback {
     private val viewModel by viewModels<MainViewModel>()

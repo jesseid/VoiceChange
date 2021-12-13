@@ -5,6 +5,7 @@ import android.os.Looper
 import android.os.Message
 import android.util.Log
 import com.example.voicechangeCompose.audio.common.AudioConstants
+import com.example.voicechangeCompose.audio.common.IHandleAudioCallback
 import com.example.voicechangeCompose.audio.common.TransFormParam
 import com.example.voicechangeCompose.module.AsyncResult
 import com.example.voicechangeCompose.module.RegistrantList
