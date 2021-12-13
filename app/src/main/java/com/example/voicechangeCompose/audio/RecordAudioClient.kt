@@ -12,7 +12,7 @@ import java.util.concurrent.BlockingQueue
 
 class RecordAudioClient {
     private val mRecordStateChangeRegistrants: RegistrantList = RegistrantList()
-    private var mRecrodThread: RecordThread? = null
+    private var mRecordThread: RecordThread? = null
 
     @Volatile
     private var mRecordAudioComplete = true
@@ -29,21 +29,21 @@ class RecordAudioClient {
     }
 
     fun startRecord(recordQueue: BlockingQueue<ShortArray>): Boolean {
-        if (mRecrodThread != null) {
+        if (mRecordThread != null) {
             return true
         }
-        mRecrodThread = RecordThread(recordQueue)
-        mRecrodThread!!.start()
+        mRecordThread = RecordThread(recordQueue)
+        mRecordThread!!.start()
         mRecordAudioComplete = false
         return true
     }
 
     fun stopRecord(): Boolean {
-        if (mRecrodThread == null) {
+        if (mRecordThread == null) {
             return true
         }
-        mRecrodThread!!.quitThread()
-        mRecrodThread = null
+        mRecordThread!!.quitThread()
+        mRecordThread = null
         waitRecordAudioComplete()
         return true
     }
