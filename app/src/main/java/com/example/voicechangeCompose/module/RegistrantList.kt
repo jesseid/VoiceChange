@@ -77,8 +77,7 @@ class RegistrantList {
         val s = registrants.size
         while (i < s) {
             val r = registrants[i] as Registrant
-            var rh: Handler?
-            rh = r.handler
+            val rh: Handler? = r.handler
 
             /* Clean up both the requested registrant and
              * any now-collected registrants

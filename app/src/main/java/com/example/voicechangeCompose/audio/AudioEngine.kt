@@ -40,7 +40,7 @@ class AudioEngine : Handler(Looper.myLooper()!!), IHandleAudioCallback {
 
     fun unregisterForRecordStateChanged(h: Handler?) {
         if (h != null) {
-            mRecordStateChangeRegistrants.remove(h)
+            mRecordAudioClient!!.unregisterForRecordStateChanged(h)
         }
     }
 
