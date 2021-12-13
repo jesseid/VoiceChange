@@ -47,7 +47,7 @@ class Registrant(h: Handler?, what: Int, obj: Any?) {
             clear()
             null
         } else {
-            var msg = h.obtainMessage()
+            val msg = h.obtainMessage()
             msg.what = what
             msg.obj = userObj
             msg

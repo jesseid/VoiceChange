@@ -1,4 +1,4 @@
-package com.voicechange.audio
+package com.example.voicechangeCompose.audio
 
 import android.annotation.SuppressLint
 import android.media.AudioRecord
@@ -69,7 +69,8 @@ class RecordAudioClient {
         override fun run() {
             val audioRecord = AudioRecord(
                     MediaRecorder.AudioSource.MIC, FREQUENCY,
-                    CHANNEL, ENCODING, bufferSize)
+                    CHANNEL, ENCODING, bufferSize
+            )
             val state = audioRecord.state
             if (state == AudioRecord.STATE_INITIALIZED) {
                 val buffer = ShortArray(bufferSize)
