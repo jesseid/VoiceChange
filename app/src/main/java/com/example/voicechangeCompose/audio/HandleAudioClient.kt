@@ -1,7 +1,10 @@
 package com.example.voicechangeCompose.audio
 
+import android.util.Log
+import com.airbnb.lottie.L
 import com.example.voicechangeCompose.audio.common.IHandleAudioCallback
 import com.example.voicechangeCompose.audio.common.TransFormParam
+import com.example.voicechangeCompose.viewmodel.MainViewModel
 import com.voicechange.audio.common.TransFormTool
 import java.util.*
 import java.util.concurrent.BlockingQueue
@@ -50,11 +53,12 @@ class HandleAudioClient {
                 Thread.sleep(100)
             } catch (e: InterruptedException) {
                 e.printStackTrace()
+                Log.i(TAG, "multiThread Error")
             }
         }
     }
 
-    inner class HandleAudioThread(private val mRecordQueue: BlockingQueue<ShortArray>, private val mAudioDatas: LinkedList<ByteArray>, private val mTransFormParam: TransFormParam) : Thread() {
+    inner class HandleAudioThread(private val mRecordQueue: BlockingQueue<ShortArray>, private val mAudioData: LinkedList<ByteArray>, private val mTransFormParam: TransFormParam) : Thread() {
         @Volatile
         private var mExitFlag = false
         fun quitThread() {
@@ -84,7 +88,7 @@ class HandleAudioClient {
                             }
                             if (bytes != null) {
                                 if (bytes.isNotEmpty()) {
-                                    mAudioDatas.add(bytes)
+                                    mAudioData.add(bytes)
                                     notifyHandleProcess(bytes)
                                 }
                             }
