@@ -10,16 +10,14 @@ class AsyncResult
         /***************************** Class Methods  */
         /** Saves and sets m.obj  */
         fun forMessage(m: Message, r: Any?, ex: Throwable?): AsyncResult {
-            val ret: AsyncResult
-            ret = AsyncResult(m.obj, r, ex)
+            val ret = AsyncResult(m.obj, r, ex)
             m.obj = ret
             return ret
         }
 
         /** Saves and sets m.obj  */
         fun forMessage(m: Message): AsyncResult {
-            val ret: AsyncResult
-            ret = AsyncResult(m.obj, null, null)
+            val ret = AsyncResult(m.obj, null, null)
             m.obj = ret
             return ret
         }
