@@ -18,7 +18,7 @@ import com.example.voicechangeCompose.ui.activity.PlayActivity
 import com.example.voicechangeCompose.audio.AudioEngine
 import com.voicechange.audio.NetworkClient
 import com.voicechange.audio.NetworkReceiver
-import com.voicechange.audio.SampleAudioPlayer
+import com.example.voicechangeCompose.audio.SampleAudioPlayer
 import com.voicechange.audio.common.AudioParam
 import com.example.voicechangeCompose.audio.common.IHandleAudioCallback
 import com.voicechange.audio.common.RecordState

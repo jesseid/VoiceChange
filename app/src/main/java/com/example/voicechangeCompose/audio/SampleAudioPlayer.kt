@@ -1,4 +1,4 @@
-package com.voicechange.audio
+package com.example.voicechangeCompose.audio
 
 import android.media.AudioManager
 import android.media.AudioTrack
@@ -51,7 +51,7 @@ class SampleAudioPlayer : IPlayComplete {
         if (mAudioParam == null) {
             return false
         }
-        if (mBReady == true) {
+        if (mBReady) {
             release()
         }
         try {
@@ -81,7 +81,7 @@ class SampleAudioPlayer : IPlayComplete {
 	 * 播放
 	 */
     fun play(): Boolean {
-        if (mBReady == false || mData == null) {
+        if (!mBReady || mData == null) {
             return false
         }
         when (mPlayState) {
@@ -147,10 +147,10 @@ class SampleAudioPlayer : IPlayComplete {
         Log.d(TAG, "mPrimePlaySize = " + mPrimePlaySize + ", audioParam = " + mAudioParam.toString())
 
 //		         STREAM_ALARM：警告声
-//		         STREAM_MUSCI：音乐声，例如music等
+//		         STREAM_MUSIC：音乐声，例如music等
 //		         STREAM_RING：铃声
 //		         STREAM_SYSTEM：系统声音
-//		         STREAM_VOCIE_CALL：电话声音
+//		         STREAM_VOICE_CALL：电话声音
         mAudioTrack = AudioTrack(AudioManager.STREAM_MUSIC,
                 mAudioParam!!.mFrequency,
                 mAudioParam!!.mChannelConfig,
@@ -158,10 +158,10 @@ class SampleAudioPlayer : IPlayComplete {
                 minBufSize,
                 AudioTrack.MODE_STREAM)
         //				AudioTrack中有MODE_STATIC和MODE_STREAM两种分类。
-//      		STREAM的意思是由用户在应用程序通过write方式把数据一次一次得写到audiotrack中。
-//				这个和我们在socket中发送数据一样，应用层从某个地方获取数据，例如通过编解码得到PCM数据，然后write到audiotrack。
+//      		STREAM的意思是由用户在应用程序通过write方式把数据一次一次得写到audioTrack中。
+//				这个和我们在socket中发送数据一样，应用层从某个地方获取数据，例如通过编解码得到PCM数据，然后write到audioTrack。
 //				这种方式的坏处就是总是在JAVA层和Native层交互，效率损失较大。
-//				而STATIC的意思是一开始创建的时候，就把音频数据放到一个固定的buffer，然后直接传给audiotrack，
+//				而STATIC的意思是一开始创建的时候，就把音频数据放到一个固定的buffer，然后直接传给audioTrack，
 //				后续就不用一次次得write了。AudioTrack会自己播放这个buffer中的数据。
 //				这种方法对于铃声等内存占用较小，延时要求较高的声音来说很适用。
     }
@@ -203,7 +203,7 @@ class SampleAudioPlayer : IPlayComplete {
             Log.d(TAG, "PlayAudioThread run mPlayOffset = $mPlayOffset, mPrimePlaySize = $mPrimePlaySize")
             mAudioTrack!!.play()
             while (true) {
-                if (mThreadExitFlag == true) {
+                if (mThreadExitFlag) {
                     break
                 }
                 mPlayOffset += try {
