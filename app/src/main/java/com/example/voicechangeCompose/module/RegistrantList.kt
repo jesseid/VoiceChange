@@ -5,7 +5,7 @@ import java.util.*
 
 class RegistrantList {
     //var registrants: ArrayList<*> = ArrayList<Any?>() // of Registrant
-    var registrants: ArrayList<Registrant?> = ArrayList<Registrant?>()
+    private var registrants: ArrayList<Registrant?> = ArrayList<Registrant?>()
     @Synchronized
     fun add(h: Handler?, what: Int, obj: Any?) {
         add(Registrant(h, what, obj))
