@@ -61,9 +61,9 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
     val audioState: LiveData<String> = _audioState
 
     private var mRecordStateHandler: Handler? = null
-    var mNetworkClient: NetworkClient? = null
-    var mNetworkReceiver: NetworkReceiver? = null
-    var mAudioEngine: AudioEngine? = null
+    private var mNetworkClient: NetworkClient? = null
+    private var mNetworkReceiver: NetworkReceiver? = null
+    private var mAudioEngine: AudioEngine? = null
 
     private fun setAudioState(value: String) {
         _audioState.postValue(value)
@@ -87,7 +87,7 @@ class MainViewModel : ViewModel(), IHandleAudioCallback {
         _channel.postValue(value)
     }
 
-    fun setPlayState(value: String) {
+    private fun setPlayState(value: String) {
         _playState.postValue(value)
     }
 
