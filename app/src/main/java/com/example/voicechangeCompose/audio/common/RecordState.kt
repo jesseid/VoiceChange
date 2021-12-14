@@ -1,4 +1,4 @@
-package com.voicechange.audio.common
+package com.example.voicechangeCompose.audio.common
 
 interface RecordState {
     companion object {

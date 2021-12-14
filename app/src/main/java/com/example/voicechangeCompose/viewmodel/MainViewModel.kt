@@ -21,7 +21,7 @@ import com.example.voicechangeCompose.audio.NetworkReceiver
 import com.example.voicechangeCompose.audio.SampleAudioPlayer
 import com.example.voicechangeCompose.audio.common.AudioParam
 import com.example.voicechangeCompose.audio.common.IHandleAudioCallback
-import com.voicechange.audio.common.RecordState
+import com.example.voicechangeCompose.audio.common.RecordState
 import com.example.voicechangeCompose.audio.common.TransFormParam
 import java.io.File
 import java.io.FileInputStream

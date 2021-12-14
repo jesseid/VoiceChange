@@ -7,7 +7,7 @@ import android.os.Handler
 import android.util.Log
 import com.example.voicechangeCompose.module.RegistrantList
 import com.example.voicechangeCompose.audio.common.AudioConstants
-import com.voicechange.audio.common.RecordState
+import com.example.voicechangeCompose.audio.common.RecordState
 import java.util.concurrent.BlockingQueue
 
 class RecordAudioClient {
