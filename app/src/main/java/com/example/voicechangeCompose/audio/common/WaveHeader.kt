@@ -12,7 +12,7 @@ class WaveHeader {
     private val formatTag: Short = 1
     var channels: Short = 1
     var sampleRate: Short = 16000
-    var bitsPerSample: Short = 16
+    private var bitsPerSample: Short = 16
     private var blockAlign = (channels * bitsPerSample / 8).toShort()
     private var avgBytesPerSec = blockAlign * sampleRate
     private val dataHdrID = charArrayOf('d', 'a', 't', 'a')
