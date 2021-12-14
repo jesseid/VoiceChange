@@ -11,7 +11,7 @@ class WaveHeader {
     private val fmtHdrLen = 16
     private val formatTag: Short = 1
     var channels: Short = 1
-    var sampleRate: Short = 16000
+    var sampleRate: Int = 44100
     private var bitsPerSample: Short = 16
     private var blockAlign = (channels * bitsPerSample / 8).toShort()
     private var avgBytesPerSec = blockAlign * sampleRate
@@ -23,7 +23,7 @@ class WaveHeader {
         dataHdrLen = fileLength
     }
 
-    constructor(fileLength: Int, channels: Short, sampleRate: Short, bitsPerSample: Short) {
+    constructor(fileLength: Int, channels: Short, sampleRate: Int, bitsPerSample: Short) {
         this.fileLength = fileLength + (44 - 8)
         dataHdrLen = fileLength
         this.channels = channels
@@ -48,7 +48,7 @@ class WaveHeader {
             writeInt(bos, fmtHdrLen)
             writeShort(bos, formatTag.toInt())
             writeShort(bos, channels.toInt())
-            writeInt(bos, sampleRate.toInt())
+            writeInt(bos, sampleRate)
             writeInt(bos, avgBytesPerSec)
             writeShort(bos, blockAlign.toInt())
             writeShort(bos, bitsPerSample.toInt())
