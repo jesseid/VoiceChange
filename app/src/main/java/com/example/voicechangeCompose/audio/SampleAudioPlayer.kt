@@ -1,10 +1,12 @@
 package com.example.voicechangeCompose.audio
 
+import android.media.AudioAttributes
+import android.media.AudioFormat
 import android.media.AudioManager
 import android.media.AudioTrack
 import android.os.Handler
 import android.util.Log
-import com.voicechange.audio.common.AudioParam
+import com.example.voicechangeCompose.audio.common.AudioParam
 import com.voicechange.audio.common.IPlayComplete
 import com.example.voicechangeCompose.audio.common.PlayState
 
@@ -102,7 +104,7 @@ class SampleAudioPlayer : IPlayComplete {
 	 * 暂停
 	 */
     fun pause(): Boolean {
-        if (mBReady == false) {
+        if (!mBReady) {
             return false
         }
         if (mPlayState == PlayState.MPS_PLAYING) {
@@ -116,7 +118,7 @@ class SampleAudioPlayer : IPlayComplete {
 	 * 停止
 	 */
     fun stop(): Boolean {
-        if (mBReady == false) {
+        if (!mBReady) {
             return false
         }
         playState = PlayState.MPS_PREPARE
@@ -151,12 +153,26 @@ class SampleAudioPlayer : IPlayComplete {
 //		         STREAM_RING：铃声
 //		         STREAM_SYSTEM：系统声音
 //		         STREAM_VOICE_CALL：电话声音
-        mAudioTrack = AudioTrack(AudioManager.STREAM_MUSIC,
-                mAudioParam!!.mFrequency,
-                mAudioParam!!.mChannelConfig,
-                mAudioParam!!.mSampBitConfig,
-                minBufSize,
-                AudioTrack.MODE_STREAM)
+//        mAudioTrack = AudioTrack(AudioManager.STREAM_MUSIC,
+//                mAudioParam!!.mFrequency,
+//                mAudioParam!!.mChannelConfig,
+//                mAudioParam!!.mSampBitConfig,
+//                minBufSize,
+//                AudioTrack.MODE_STREAM)
+        mAudioTrack = AudioTrack(
+            AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build(),
+            AudioFormat.Builder()
+                .setSampleRate(mAudioParam!!.mFrequency)
+                .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+                .setChannelMask(mAudioParam!!.mChannelConfig)
+                .build(),
+            minBufSize,
+            AudioTrack.MODE_STREAM,
+            AudioManager.AUDIO_SESSION_ID_GENERATE,
+        )
         //				AudioTrack中有MODE_STATIC和MODE_STREAM两种分类。
 //      		STREAM的意思是由用户在应用程序通过write方式把数据一次一次得写到audioTrack中。
 //				这个和我们在socket中发送数据一样，应用层从某个地方获取数据，例如通过编解码得到PCM数据，然后write到audioTrack。

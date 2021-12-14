@@ -3,7 +3,7 @@ package com.voicechange.audio
 import android.media.AudioManager
 import android.media.AudioTrack
 import android.util.Log
-import com.voicechange.audio.common.AudioParam
+import com.example.voicechangeCompose.audio.common.AudioParam
 
 class StreamAudioPlayer {
     private var mAudioParam // 音频参数

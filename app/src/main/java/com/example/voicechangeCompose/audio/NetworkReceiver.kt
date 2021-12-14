@@ -1,7 +1,7 @@
 package com.voicechange.audio
 
 import com.example.voicechangeCompose.audio.common.AudioConstants
-import com.voicechange.audio.common.AudioParam
+import com.example.voicechangeCompose.audio.common.AudioParam
 
 class NetworkReceiver {
     private val mSteamAudioPlay = StreamAudioPlayer()
