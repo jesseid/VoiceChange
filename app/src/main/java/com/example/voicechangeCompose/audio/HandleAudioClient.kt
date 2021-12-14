@@ -3,7 +3,7 @@ package com.example.voicechangeCompose.audio
 import android.util.Log
 import com.example.voicechangeCompose.audio.common.IHandleAudioCallback
 import com.example.voicechangeCompose.audio.common.TransFormParam
-import com.voicechange.audio.common.TransFormTool
+import com.example.voicechangeCompose.audio.common.TransFormTool
 import java.util.*
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.TimeUnit

@@ -1,7 +1,7 @@
 package com.example.voicechangeCompose.audio
 
 import com.amoment.audio.JNISoundTouch
-import com.voicechange.audio.common.TransFormTool
+import com.example.voicechangeCompose.audio.common.TransFormTool
 
 class SoundTouchTransFormTool : TransFormTool() {
     private val ndkUtil = JNISoundTouch()
