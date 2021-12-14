@@ -7,7 +7,7 @@ import android.media.AudioTrack
 import android.os.Handler
 import android.util.Log
 import com.example.voicechangeCompose.audio.common.AudioParam
-import com.voicechange.audio.common.IPlayComplete
+import com.example.voicechangeCompose.audio.common.IPlayComplete
 import com.example.voicechangeCompose.audio.common.PlayState
 
 class SampleAudioPlayer : IPlayComplete {
