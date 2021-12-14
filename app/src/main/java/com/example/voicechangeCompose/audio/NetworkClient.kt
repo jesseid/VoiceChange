@@ -1,4 +1,4 @@
-package com.voicechange.audio
+package com.example.voicechangeCompose.audio
 
 class NetworkClient {
     private var mNetworkReceive: NetworkReceiver? = null
@@ -18,7 +18,7 @@ class NetworkClient {
     }
 
     fun sendAudio(data: ByteArray?): Boolean {
-        return if (data == null || mConnectNetworkSuccess == false) {
+        return if (data == null || !mConnectNetworkSuccess) {
             false
         } else mNetworkReceive!!.receiveAudio(data)
     }

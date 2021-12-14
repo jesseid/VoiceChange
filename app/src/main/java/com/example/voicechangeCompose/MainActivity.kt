@@ -20,8 +20,8 @@ import com.example.voicechangeCompose.viewmodel.MainViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.example.voicechangeCompose.audio.AudioEngine
-import com.voicechange.audio.NetworkClient
-import com.voicechange.audio.NetworkReceiver
+import com.example.voicechangeCompose.audio.NetworkClient
+import com.example.voicechangeCompose.audio.NetworkReceiver
 import com.example.voicechangeCompose.audio.common.IHandleAudioCallback
 
 class MainActivity : ComponentActivity(), IHandleAudioCallback {

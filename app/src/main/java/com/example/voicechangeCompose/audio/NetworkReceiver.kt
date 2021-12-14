@@ -1,4 +1,4 @@
-package com.voicechange.audio
+package com.example.voicechangeCompose.audio
 
 import com.example.voicechangeCompose.audio.common.AudioConstants
 import com.example.voicechangeCompose.audio.common.AudioParam
