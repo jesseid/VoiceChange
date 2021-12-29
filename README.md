@@ -1,2 +1,3 @@
 # VoiceChange_compose
-**使用jetpack 框架重构https://github.com/nocsg/VoiceChange**
+**rebuild old project with jetpcak https://github.com/nocsg/VoiceChange**
+IF you Android VERSION_CODE is below Android R, please use the old project
