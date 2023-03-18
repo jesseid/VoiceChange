@@ -1,6 +1,6 @@
 # VoiceChange
  
- A voice change app base on `soundtouch` lib
+ A voice change app base on [`soundtouch`](https://github.com/rspeyer/soundtouch) lib
 
 ## PREREQUISITES
 - JDK 11+
