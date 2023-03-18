@@ -1,4 +1,6 @@
-# VoiceChange_compose
+# VoiceChange
+ 
+ A voice change app base on `soundtouch` lib
 
 ## PREREQUISITES
 - JDK 11+
